@@ -2,8 +2,8 @@
 > หุ่นยนต์สำหรับขนส่งกล่องพัสดุภายในคอนโด หุ่นจะรับพัสดุจากตำแหน่งรับพัสดุและนำไปส่งได้พร้อมกันไม่เกิน 2 ห้อง หุ่นยนต์จะรอเพื่อรับโค้ดเพื่อยืนยันตัวตนและเดินออกไปเมื่อพัสดุถูกหยิบไปและได้รับคำยืนยันจากผู้หยิบ
 ## The robot
 หุ่นยนต์ที่ได้ออกแบบไว้จะมีลักษณะเป็นตู้กระจกบนและล่าง(แบบแรกออกแบบผิด) มีแผ่นกั้นด้านในสำหรับส่งได้ถึงสองห้อง มีการใช้ Lidar และมีล้อขับเคลื่อนแบบ differential drive
-![This is an image](https://files.fm/thumb.php?i=prxcdfxvp)
 
+![This is an image](https://files.fm/thumb.php?i=prxcdfxvp)
 ![This is an image](https://files.fm/thumb.php?i=64hq4peu7)
 ## Code description
 ### 1. Environment

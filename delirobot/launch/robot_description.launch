@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/> -->
-    <!-- send urdf to param server -->
-
-    <!-- <param name="robot_description" textfile="$(find DeliRobot2)/urdf/DeliRobot2.urdf" /> -->
-
+  
   <!-- <param name="robot_description" command="$(find xacro)/xacro inorder $(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro" /> -->
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(find delirobot_description)/urdf/delirobot.xacro" />
 

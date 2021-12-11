@@ -1,0 +1,462 @@
+<?xml version='1.0'?>
+
+<robot name="delirobot"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find delirobot_description)/urdf/delirobot.gazebo" />
+
+    <link name="base_link"></link>
+
+    <joint name="base_link_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="base_link"/>
+        <child link="chassis" />
+    </joint>
+
+    <link name='chassis'>
+        <pose>0 0 0.1 0 0 0</pose>
+
+        <inertial>
+            <mass value="15.0"/>
+            <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+        </inertial>
+
+        <collision name='collision'>
+            <origin xyz="0 0 0" rpy=" 0 0 0"/>
+            <geometry>
+                <box size=".1 .1 .1"/>
+            </geometry>
+        </collision>
+
+        <!-- <visual name='chassis_visual'>
+            <origin xyz="0 0 0" rpy=" 0 0 0"/>
+            <geometry>
+                <box size=".1 .1 .1"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1" />
+            </material>
+        </visual> -->
+
+
+        <collision name='back_caster_collision'>
+            <origin xyz="-0.1 0 -0.05" rpy=" 0 0 0"/>
+            <geometry>
+                <sphere radius="0.0499"/>
+            </geometry>
+        </collision>
+
+        <visual name='back_caster_visual'>
+            <origin xyz="-0.1 0 -0.05" rpy=" 0 0 0"/>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1" />
+            </material>
+        </visual>
+
+        <collision name='front_caster_collision'>
+            <origin xyz="0.1 0 -0.05" rpy=" 0 0 0"/>
+            <geometry>
+                <sphere radius="0.0499"/>
+            </geometry>
+        </collision>
+
+        <visual name='front_caster_visual'>
+            <origin xyz="0.1 0 -0.05" rpy=" 0 0 0"/>
+            <geometry>
+                <sphere radius="0.05"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1" />
+            </material>
+        </visual>
+    </link>
+
+    <link name='left_wheel'>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1" />
+            </material>
+        </visual>
+        <inertial>
+            <mass value="5"/>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+        </inertial>
+    </link>
+
+    <link name='right_wheel'>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1" />
+            </material>
+        </visual>
+        <inertial>
+            <mass value="5"/>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+        </inertial>
+    </link>
+
+    <joint type="continuous" name="left_wheel_hinge">
+        <origin xyz="0 0.15 0" rpy="0 0 0"/>
+        <child link="left_wheel"/>
+        <parent link="chassis"/>
+        <axis xyz="0 1 0" rpy="0 0 0"/>
+        <limit effort="10000" velocity="1000"/>
+        <dynamics damping="1.0" friction="1.0"/>
+    </joint>
+
+    <joint type="continuous" name="right_wheel_hinge">
+        <origin xyz="0 -0.15 0" rpy="0 0 0"/>
+        <child link="right_wheel"/>
+        <parent link="chassis"/>
+        <axis xyz="0 1 0" rpy="0 0 0"/>
+        <limit effort="10000" velocity="1000"/>
+        <dynamics damping="1.0" friction="1.0"/>
+    </joint>
+    <!-- ============================================ base ============================================ -->
+
+    <link name="body">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="15" />
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/base_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="1 1 1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/base_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="body_link" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="body" />
+        <axis xyz="0 0 0" />
+    </joint>
+    <!-- ============================================ upperglass ============================================ -->
+    <link name="upperglass">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="1e-5" />
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/upperglass.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.76078431372549 0.4 0.180392156862745 0.3" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/upperglass.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="upperglass_joint" type="revolute">
+        <origin xyz="0.15 -0.19 0.18" rpy="0 0 0" />
+        <parent link="body" />
+        <child link="upperglass" />
+        <axis xyz="0 0 1" />
+        <limit lower="0" upper="0" effort="0" velocity="0" />
+    </joint>
+    <!-- ============================================ lowerglass ============================================ -->
+    <link name="lowerglass">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="1e-5" />
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/lowerglass.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.76078431372549 0.4 0.180392156862745 0.3" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/lowerglass.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="lowerglass_joint" type="revolute">
+        <origin xyz="0.15 -0.19 0.02" rpy="0 0 0" />
+        <parent link="body" />
+        <child link="lowerglass" />
+        <axis xyz="0 0 1" />
+        <limit lower="0" upper="0" effort="0" velocity="0" />
+    </joint>
+    <!-- ============================================ FRwheel ============================================ -->
+    <!-- <link name="FRwheel">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="5" />
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.57 1.57" />
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 1.57 1.57" />
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="FRwheel_joint" type="continuous">
+        <origin xyz="0.1162 -0.22 0.0078441" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="FRwheel" />
+        <axis xyz="0 1 0" />
+        <limit effort="1000" velocity="500"/>
+        <dynamics damping="1.0" friction="1.0"/>
+    </joint>
+    ============================================ FLwheel ============================================
+    <link name="FLwheel">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="5" />
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.57 1.57" />
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 1.57 1.57" />
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="FLwheel_joint" type="continuous">
+        <origin xyz="0.10241 0.22 0.0065124" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="FLwheel" />
+        <axis xyz="0 1 0" />
+        <limit effort="1000" velocity="500"/>
+        <dynamics damping="1.0" friction="1.0"/>
+    </joint>
+    ============================================ BRwheel ============================================
+    <link name="BRwheel">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="5" />
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.57 1.57" />
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 1.57 1.57" />
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="BRwheel_joint" type="continuous">
+        <origin xyz="-0.10225 -0.22 0.0063205" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="BRwheel" />
+        <axis xyz="0 1 0" />
+        <limit effort="1000" velocity="500"/>
+        <dynamics damping="1.0" friction="1.0"/>
+    </joint>
+    ============================================ BLwheel ============================================
+    <link name="BLwheel">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="5" />
+            <inertia ixx="0.1" ixy="0" ixz="0" iyy="0.1" iyz="0" izz="0.1" />
+        </inertial>
+
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.57 1.57" />
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 1.57 1.57" />
+            <geometry>
+                <cylinder radius="0.1" length="0.05"/>
+            </geometry>
+        </collision>
+    </link>
+    <joint name="BLwheel_joint" type="continuous">
+        <origin xyz="-0.11766 0.22 0.0064268" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="BLwheel" />
+        <axis xyz="0 1 0" />
+        <limit effort="1000" velocity="500"/>
+        <dynamics damping="1.0" friction="1.0"/>
+    </joint> -->
+    <!-- ============================================ bulb ============================================ -->
+    <link name="bulb">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="0.006" />
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/bulb.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/bulb.STL" />
+            </geometry>
+        </collision>
+
+        <light name='lamp' type='spot'>
+        </light>
+        <plugin name='light_control' filename='libLedPlugin.so'>
+            <light>
+                <light>/lamp</light>
+                <duration>0.5</duration>
+                <interval>0.5</interval>
+            </light>
+        </plugin>
+
+    </link>
+    <joint name="bulb_joint" type="fixed">
+        <origin xyz="-0.19137 0 0.25319" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="bulb" />
+        <axis xyz="0 0 0" />
+    </joint>
+    <!-- ============================================ plate ============================================ -->
+    <link name="plate">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="0.51" />
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/plate.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.647058823529412 0.619607843137255 0.6 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/plate.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="plate_joint" type="revolute">
+        <origin xyz="-0.12 -0.15602 0.175" rpy="0 0 0" />
+        <parent link="body" />
+        <child link="plate" />
+        <axis xyz="0 1 0" />
+        <limit lower="0" upper="0" effort="0" velocity="0" />
+    </joint>
+    <!-- ============================================ lidar ============================================ -->
+    <link name="hokuyo">
+        <inertial>
+            <mass value="1e-5"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/lidar.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://delirobot_description/meshes/lidar.STL" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="lidar_joint" type="fixed">
+        <origin xyz="0 0 0.36" rpy="0 0 0" />
+        <parent link="body" />
+        <child link="hokuyo" />
+        <axis xyz="0 0 0" />
+    </joint>
+
+    <gazebo reference="hokuyo">
+        <material>Gazebo/Gold</material>
+    </gazebo>
+</robot>

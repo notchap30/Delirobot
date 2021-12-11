@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+  <!-- SLAM Gmapping -->
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" clear_params="true">
+    <param name="odom_frame" value="odom"/>
+    <param name="base_frame" value="base_link"/>
+    <remap from="scan" to="/scan"/>
+  </node>
+
+</launch>

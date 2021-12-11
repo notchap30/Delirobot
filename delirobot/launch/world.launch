@@ -10,10 +10,8 @@
     <arg name="pitch" default="0"/>
     <arg name="yaw" default="0"/>
     
-    <!-- Launch other relevant files-->
-    <!-- <include file="$(find DeliRobot2)/launch/display.launch"/> -->
+    <!-- Launch other relevant files-->"/> -->
     <include file="$(find delirobot)/launch/robot_description.launch"/>
-    <!-- <include file="$(find delirobot)/launch/amcl.launch"/> -->
 
     <!-- World File -->
     <arg name="world_file" default="$(find delirobot)/worlds/Apartment.world"/>

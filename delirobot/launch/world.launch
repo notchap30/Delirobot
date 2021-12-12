@@ -11,7 +11,6 @@
     <arg name="yaw" default="0"/>
     
     <!-- Launch other relevant files-->
-    <!-- <include file="$(find DeliRobot2)/launch/display.launch"/> -->
     <include file="$(find delirobot)/launch/robot_description.launch"/>
     <!-- <include file="$(find delirobot)/launch/amcl.launch"/> -->
 
